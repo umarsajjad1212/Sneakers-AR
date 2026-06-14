@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Product Intelligence</title>
+
+<script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+background:#020408;
+font-family:'Orbitron',sans-serif;
+overflow:hidden;
+color:#00f7ff;
+}
+
+model-viewer{
+width:100vw;
+height:100vh;
+background:radial-gradient(circle at center,#07131f,#000);
+}
+
+.hud{
+position:absolute;
+left:30px;
+top:50%;
+transform:translateY(-50%);
+width:360px;
+padding:25px;
+background:rgba(0,0,0,.35);
+border:1px solid rgba(0,247,255,.4);
+backdrop-filter:blur(12px);
+box-shadow:
+0 0 20px rgba(0,247,255,.15),
+0 0 40px rgba(0,247,255,.08);
+z-index:100;
+}
+
+.hud::before{
+content:"";
+position:absolute;
+top:-1px;
+left:-1px;
+width:50px;
+height:50px;
+border-top:2px solid #00f7ff;
+border-left:2px solid #00f7ff;
+}
+
+.hud::after{
+content:"";
+position:absolute;
+bottom:-1px;
+right:-1px;
+width:50px;
+height:50px;
+border-bottom:2px solid #00f7ff;
+border-right:2px solid #00f7ff;
+}
+
+.title{
+font-size:20px;
+letter-spacing:3px;
+color:white;
+margin-bottom:20px;
+}
+
+#typing{
+white-space:pre-line;
+line-height:1.9;
+font-size:13px;
+min-height:300px;
+}
+
+.recommendation{
+margin-top:20px;
+padding-top:15px;
+border-top:1px solid rgba(0,247,255,.25);
+}
+
+.rec-title{
+font-size:12px;
+letter-spacing:2px;
+opacity:.8;
+}
+
+.rec-value{
+font-size:32px;
+font-weight:700;
+margin-top:5px;
+color:#00f7ff;
+text-shadow:
+0 0 10px #00f7ff,
+0 0 25px #00f7ff;
+}
+
+.scan-line{
+position:absolute;
+left:0;
+width:100%;
+height:3px;
+background:#00f7ff;
+box-shadow:
+0 0 10px #00f7ff,
+0 0 30px #00f7ff;
+animation:scan 4s linear infinite;
+pointer-events:none;
+z-index:50;
+}
+
+@keyframes scan{
+0%{
+top:0;
+}
+100%{
+top:100%;
+}
+}
+
+.status{
+position:absolute;
+top:25px;
+right:25px;
+padding:10px 15px;
+border:1px solid rgba(0,247,255,.4);
+background:rgba(0,0,0,.35);
+backdrop-filter:blur(10px);
+font-size:12px;
+letter-spacing:2px;
+z-index:100;
+}
+
+.radar{
+position:absolute;
+bottom:30px;
+right:30px;
+width:140px;
+height:140px;
+border:1px solid rgba(0,247,255,.5);
+border-radius:50%;
+animation:rotate 8s linear infinite;
+z-index:100;
+}
+
+.radar::before{
+content:"";
+position:absolute;
+left:50%;
+top:50%;
+width:2px;
+height:60px;
+background:#00f7ff;
+transform-origin:bottom center;
+}
+
+@keyframes rotate{
+from{
+transform:rotate(0deg);
+}
+to{
+transform:rotate(360deg);
+}
+}
+
+@media(max-width:768px){
+
+.hud{
+width:90%;
+left:5%;
+top:auto;
+bottom:20px;
+transform:none;
+}
+
+.radar{
+width:90px;
+height:90px;
+}
+
+.rec-value{
+font-size:24px;
+}
+
+}
+
+</style>
+</head>
+<body>
+
+<model-viewer
+src="Sneakers.glb"
+camera-controls
+auto-rotate
+shadow-intensity="1"
+ar
+ar-modes="webxr scene-viewer quick-look">
+</model-viewer>
+
+<div class="scan-line"></div>
+
+<div class="status">
+SYSTEM ONLINE
+</div>
+
+<div class="hud">
+
+<div class="title">
+PRODUCT INTELLIGENCE
+</div>
+
+<div id="typing"></div>
+
+<div class="recommendation">
+<div class="rec-title">RECOMMENDATION</div>
+<div class="rec-value">HIGH</div>
+</div>
+
+</div>
+
+<div class="radar"></div>
+
+<script>
+
+const text = `
+> INITIALIZING PRODUCT SCANNER
+
+> ESTABLISHING VISUAL LINK
+
+> ANALYZING OBJECT
+
+PRODUCT
+
+UNISEX CASUAL
+ATHLETIC SNEAKERS
+
+COLOR
+
+BLACK
+
+AVAILABLE SIZES
+
+7
+8
+9
+10
+
+STATUS
+
+AVAILABLE
+
+> ANALYSIS COMPLETE
+`;
+
+let i = 0;
+
+function typeEffect(){
+
+const target =
+document.getElementById("typing");
+
+if(i < text.length){
+
+target.innerHTML += text.charAt(i);
+
+i++;
+
+setTimeout(typeEffect,20);
+
+}
+
+}
+
+window.onload = typeEffect;
+
+</script>
+
+</body>
+</html>
